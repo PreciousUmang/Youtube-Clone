@@ -9,7 +9,7 @@ export const fetchVideos = () => async (dispatch) =>{
         type : SET_LOADING,
         payload: true
     })
-}
+
 
 try {
     const response = await axios.get('http://localhost:2309/api/videos')
@@ -19,9 +19,11 @@ try {
     })
 } catch (error) {
     console.error('Can not load videos :', error)
+    alert('Can not load videos. Please try later')
 } finally {
     dispatch({
         type : SET_LOADING,
         payload: false
     })
+}
 }

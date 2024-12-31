@@ -9,7 +9,7 @@ const API = 'http://localhost:2309/api/auth'
 // Login User Implementation Here
 export const loginUser = (credentials) => async (dispatch) =>{
     try {
-        await axios.post(`${API_URL}/login`, credentials)
+        await axios.post(`${API}/login`, credentials)
         const {token} = response.data;
 
         const user = jwtDecode(token);
@@ -23,6 +23,7 @@ export const loginUser = (credentials) => async (dispatch) =>{
         localStorage.setItem('authToken', token)
     } catch (error) {
         console.error("Lognin Failed :", error)
+        alert('Invalid Credentials. Please Try Again.')
     }
 }
 
@@ -30,6 +31,6 @@ export const loginUser = (credentials) => async (dispatch) =>{
 const logoutUser = () => (dispatch) =>{
     localStorage.removeItem('authToken');
     dispatch({
-        type: LOGOUT_USER
+        type: LOGOUT_USER,
     })
 }
