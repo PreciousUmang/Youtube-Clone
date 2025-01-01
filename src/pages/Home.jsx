@@ -1,4 +1,6 @@
 import VideoCard from '../components/VideoCard';
+import CategoryFilter from '../components/CategoryFilter';
+import { useSelector } from 'react-redux';
 
 const sampleVideos = [
   {
@@ -18,11 +20,17 @@ const sampleVideos = [
 ];
 
 const Home = () => {
+
+  const videos = useSelector((state) => state.video.filteredVideos);
+
   return (
-    <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-4">
-      {sampleVideos.map((video) => (
-        <VideoCard key={video.videoId} video={video} />
-      ))}
+    <div className="p-4">
+      <CategoryFilter />
+      <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {videos.map((video) => (
+          <VideoCard key={video.videoId} video={video} />
+        ))}
+      </div>
     </div>
   );
 };

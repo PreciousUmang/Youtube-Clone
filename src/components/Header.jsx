@@ -2,7 +2,7 @@ import { useState } from 'react';
 import SearchBar from './SearchBar';
 import Sidebar from './Sidebar';
 
-const Header = () => {
+const Header = ({onSidebarToggle}) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
     const toggleSidebar = () => {
         const newState = !isSidebarOpen;
