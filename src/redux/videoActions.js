@@ -2,6 +2,8 @@ import axios from "axios";
 
 export const FETCH_VIDEOS = 'FETCH_VIDEOS';
 export const SET_LOADING = 'SET_LOADING';
+export const FILTER_VIDEOS = 'FILTER_VIDEOS';
+
 
 // Fetching Videos
 export const fetchVideos = () => async (dispatch) =>{
@@ -27,3 +29,10 @@ try {
     })
 }
 }
+
+
+export const filterVideos = (query) => (
+    {
+    type: FILTER_VIDEOS,
+    payload: query 
+    });
