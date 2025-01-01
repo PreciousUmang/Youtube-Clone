@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import { useState } from "react";
+import VideoDetails from "./pages/VideoDetails";
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/video/:videoId" element={<VideoDetails />} />
           </Routes>
         </div>
       </Router>
