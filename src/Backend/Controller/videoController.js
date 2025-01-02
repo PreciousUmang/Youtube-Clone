@@ -4,12 +4,13 @@ import { validationResult } from 'express-validator';
 // Create a new video
 export const createVideo = async (req, res) => {
   try {
-    const { videoId, title, thumbnailUrl, description, channelId, uploader, views, likes, dislikes, uploadDate, comments } = req.body;
+    const { videoId, title, videoUrl, thumbnailUrl, description, channelId, uploader, views, likes, dislikes, uploadDate, comments } = req.body;
     
     const newVideo = new Video({
       videoId,
       title,
       thumbnailUrl,
+      videoUrl,
       description,
       channelId,
       uploader,
