@@ -39,3 +39,26 @@ export const filterVideos = (query) => ({
     type: FILTER_VIDEOS,
     payload: query,
 });
+
+
+// Redux actions for comment handling
+export const addComment = (videoId, commentText) => {
+    return {
+        type: "ADD_COMMENT",
+        payload: { videoId, commentText },
+    };
+};
+
+export const deleteComment = (videoId, commentId) => {
+    return {
+        type: "DELETE_COMMENT",
+        payload: { videoId, commentId },
+    };
+};
+
+export const editComment = (videoId, commentId, newText) => {
+    return {
+        type: "EDIT_COMMENT",
+        payload: { videoId, commentId, newText },
+    };
+};
