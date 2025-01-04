@@ -9,10 +9,9 @@ const Home = () => {
 
   // Redux state (for filtering)
   const filteredVideos = useSelector((state) => state.video.filteredVideos);
-  const loading = useSelector((state) => state.video.loading); // Get loading state from Redux
-  const error = useSelector((state) => state.video.error); // Get error state from Redux
-
-  // Fetch videos and their comments from the backend API
+  const loading = useSelector((state) => state.video.loading); 
+  const error = useSelector((state) => state.video.error); 
+ 
   useEffect(() => {
     dispatch(fetchVideos());
   }, [dispatch]);

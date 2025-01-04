@@ -16,14 +16,22 @@ const SignUp = () => {
         email,
         password,
       });
-      console.log('User registered:', response.data);
+      console.log('User registered:', response.data); 
+      alert('Signup Successful! Redirecting to login...'); 
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 2000);
       setSuccess(true);
       alert('User has been successfully registered');
       setUsername('');
       setEmail('');
       setPassword('');
     } catch (error) {
-      setError('Error during sign-up. Please try again.');
+      if (error.response && error.response.status === 409) {
+        setError('This email is already registered. Please use a different email.');
+      } else {
+        setError('Error during sign-up. Please try again.');
+      }
       console.error('Error during sign-up:', error);
     }
   };

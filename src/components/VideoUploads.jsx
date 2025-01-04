@@ -6,6 +6,7 @@ const VideoUpload = () => {
   const [description, setDescription] = useState('');
   const [thumbnail, setThumbnail] = useState(null);
   const [videoFile, setVideoFile] = useState(null);
+  const [videoUrl, setVideoUrl] = useState(''); // New state for video URL
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 

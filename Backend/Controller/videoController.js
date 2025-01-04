@@ -4,7 +4,10 @@ import { validationResult } from 'express-validator';
 // Create a new video
 export const createVideo = async (req, res) => {
   try {
-    const { videoId, title, videoUrl, thumbnailUrl, description, channelId, uploader, views, likes, dislikes, uploadDate, comments } = req.body;
+    const { videoId, title, videoUrl, thumbnailUrl, description, channelId, uploader, views, likes, dislikes, uploadDate, comments } = req.body;    
+    if (!videoUrl && !req.file) {
+        return res.status(400).json({ message: 'Video URL or file must be provided' });
+    }
     
     const newVideo = new Video({
       videoId,

@@ -17,7 +17,7 @@ function SearchBar(){
           value={query}
           onChange={handleSearch}
           placeholder="Search videos..."
-          className="border-gray-300 p-2 border rounded-lg w-3/4"
+          className="border-gray-300 p-2 border rounded-lg w-1/2"
         />
       );
 }

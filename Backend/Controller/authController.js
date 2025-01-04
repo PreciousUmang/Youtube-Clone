@@ -9,6 +9,11 @@ export const signup = async (req, res) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        return res.status(409).json({ error: 'User already exists with this email' });
+    }
+
     const newUser = new User({
       username,
       email,
@@ -18,7 +23,7 @@ export const signup = async (req, res) => {
     await newUser.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (error) {
-    res.status(500).json({ error: 'Error during registration' });
+    res.status(500).json({ error: 'Error during registration', details: error.message });
   }
 };
 

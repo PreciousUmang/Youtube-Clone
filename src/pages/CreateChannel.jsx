@@ -20,8 +20,8 @@ const CreateChannel = () => {
           {
             channelName: channelName,
             description: description,
-            owner: 'userName', // hardcoded owner ID for now
-            banner: 'https://example.com/banner-image.jpg', // hardcoded banner URL for now
+            owner: JSON.parse(atob(token.split('.')[1])).id, // Extract user ID from token
+            banner: '', // Allow user to specify banner URL
             subscribers: 0, // default subscribers to 0
             createdAt: new Date().toISOString(), // set createdAt to current date and time
           },

@@ -16,7 +16,8 @@ const Login = () => {
         password,
       });
 
-      localStorage.setItem('token', response.data.token);
+      console.log('Login successful:', response.data); // Log the response data
+      localStorage.setItem('token', response.data.token); // Store the token
       localStorage.setItem('userName', response.data.user.username);
       console.log('Login successful');
       navigate('/');
