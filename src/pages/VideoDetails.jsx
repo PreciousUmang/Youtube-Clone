@@ -8,9 +8,8 @@ const VideoDetails = () => {
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [comments, setComments] = useState([]); // State for comments
-  const [newComment, setNewComment] = useState(''); // State for new comment input
-
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
   // Fetch the video data
   useEffect(() => {
     const fetchVideoData = async () => {
@@ -18,7 +17,7 @@ const VideoDetails = () => {
         const videoResponse = await axios.get(`/videos/${videoId}`);
         setVideo(videoResponse.data);
         setLoading(false);
-        fetchComments(); // Fetch comments when video data is loaded
+        fetchComments(); 
       } catch (err) {
         setError('Error fetching video data');
         setLoading(false);
@@ -38,17 +37,16 @@ const VideoDetails = () => {
   }, [videoId]); 
 
 const handleCommentSubmit = async (e) => {
-    console.log("Submitting comment:", newComment); // Log the comment being submitted
     e.preventDefault();
     try {
-      const token = localStorage.getItem('token'); // Get the token from local storage
+      const token = localStorage.getItem('token'); 
       const response = await axios.post(`/${videoId}/comments`, { text: newComment }, {
         headers: {
-          Authorization: `Bearer ${token}`, // Include the token in the request headers
+          Authorization: `Bearer ${token}`, 
         },
       });
-      setComments((prevComments) => [response.data, ...prevComments]); // Add new comment to the state
-      setNewComment(''); // Clear the input field
+      setComments((prevComments) => [response.data, ...prevComments]);
+      setNewComment(''); 
     } catch (err) {
       console.error('Error adding comment:', err);
     }
@@ -74,7 +72,7 @@ const handleCommentSubmit = async (e) => {
         <div className="bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="p-6">
             <h1 className="font-semibold text-4xl text-gray-900">{video.title}</h1>
-            <VideoPlayer videoUrl={video.videoUrl} title={video.title} description={video.description} />
+<VideoPlayer videoUrl={video.videoUrl} title={video.title} description={video.description} videoId={videoId} />
             <div className="flex justify-between items-center mt-4">
               <p className="text-gray-600">Uploaded By: {video.channelId.channelName}</p>
               <p className="text-gray-500">Subscribers: {video.channelId.subscribers}</p>
@@ -95,7 +93,9 @@ const handleCommentSubmit = async (e) => {
                 <button className="bg-gray-300 hover:bg-gray-400 shadow px-4 py-2 rounded text-gray-700 transition duration-300 ease-in-out">More</button>
               </div>
             </div>
-            {/* Comment Section */}
+
+
+{/* omments section */}
             <div className="mt-6">
               <h2 className="font-semibold text-xl">Comments</h2>
               <form onSubmit={handleCommentSubmit} className="flex mt-4">
@@ -110,9 +110,9 @@ const handleCommentSubmit = async (e) => {
                 <button type="submit" className="bg-primary px-4 rounded-r-lg text-white">Submit</button>
               </form>
               <div className="mt-4">
-                {comments.map((comment) => (
+                    {comments.map((comment) => (
                   <div key={comment._id} className="py-2 border-b">
-                    <p className="font-semibold">{comment.user.name}</p>
+                    <p className="font-semibold">{comment.user.username || comment.user.name}</p>
                     <p>{comment.text}</p>
                   </div>
                 ))}

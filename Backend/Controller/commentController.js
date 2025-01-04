@@ -4,7 +4,7 @@ import Video from '../Model/Video.js';
 export const getComments = async (req, res) => {
   try {
     const comments = await Comment.find({ videoId: req.params.videoId })
-      .populate('user', 'name') 
+      .populate('user', 'username') 
       .sort({ createdAt: -1 }); 
 
     res.json(comments);
@@ -27,11 +27,12 @@ export const postComment = async (req, res) => {
     const newComment = new Comment({
       text,
       videoId: video._id,
-      user: req.user._id,
+      user: req.userId,
     });
 
     const savedComment = await newComment.save();
-    res.status(201).json(savedComment);
+    const populatedComment = await Comment.findById(savedComment._id).populate('user', 'username');
+    res.status(201).json(populatedComment);
   } catch (err) {
     console.error('Error adding comment:', err);
     res.status(500).json({ message: 'Error adding comment' });

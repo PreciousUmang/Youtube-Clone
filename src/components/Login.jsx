@@ -16,10 +16,9 @@ const Login = () => {
         password,
       });
 
-      console.log('Login successful:', response.data); // Log the response data
+      console.log('Login successful:', response.data); 
       localStorage.setItem('token', response.data.token); // Store the token
       localStorage.setItem('userName', response.data.user.username);
-      console.log('Login successful');
       navigate('/');
     } catch (error) {
       setError('Invalid credentials. Please try again.');
