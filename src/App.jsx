@@ -3,6 +3,10 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import { useState } from "react";
 import VideoDetails from "./pages/VideoDetails";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+import CreateChannel from "./pages/CreateChannel";
+import ChannelPage from "./pages/ChannelPage";
 
 
 function App() {
@@ -24,6 +28,14 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/video/:videoId" element={<VideoDetails />} />
+
+            {/* Login/Signup */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+
+            {/* Channel */}
+            <Route path="/create-channel" element={<CreateChannel />} />
+            <Route path="/channel/:channelId" element={<ChannelPage />} />
           </Routes>
         </div>
       </Router>

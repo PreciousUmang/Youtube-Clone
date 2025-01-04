@@ -4,9 +4,9 @@ import { createChannel, getChannels, getChannelDetails, updateChannel, deleteCha
 const router = express.Router();
 
 router.post('/create', createChannel);
-router.get('/channels', getChannels);
-router.get('/channels/:channelId', getChannelDetails);
-router.put('/channels/:channelId', updateChannel);
-router.delete('/channels/:channelId', deleteChannel);
+router.get('/', getChannels);
+router.get('/:channelId', getChannelDetails);
+router.put('/:channelId', updateChannel);
+router.delete('/:channelId', deleteChannel);
 
 export default router;

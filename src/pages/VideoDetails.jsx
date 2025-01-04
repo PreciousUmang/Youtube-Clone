@@ -1,112 +1,53 @@
-import { useParams } from "react-router-dom";
-import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { addComment, deleteComment, editComment } from '../redux/videoActions';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from '../api/axios'; // Adjust based on your axios configuration
 
 const VideoDetails = () => {
-  const video = useSelector((state) => state.video.selectedVideo);
-  const [newComment, setNewComment] = useState('');
-  const [editingCommentId, setEditingCommentId] = useState(null);
-  const [editedComment, setEditedComment] = useState('');
-  const dispatch = useDispatch();
+  const { videoId } = useParams();
+  const [video, setVideo] = useState(null);
+  const [loading, setLoading] = useState(true);  // Tracks loading state
+  const [error, setError] = useState(null);  // Tracks error state
 
-  const handleAddComment = () => {
-    if (newComment.trim()) {
-      dispatch(addComment(video.videoId, newComment));
-      setNewComment('');
-    }
-  };
+  // Fetch the video data
+  useEffect(() => {
+    const fetchVideoData = async () => {
+      try {
+        const videoResponse = await axios.get(`/videos/${videoId}`);
+        setVideo(videoResponse.data);
+        setLoading(false);  // Data fetched, set loading to false
+      } catch (err) {
+        setError('Error fetching video data');
+        setLoading(false);  // Even in case of an error, stop loading
+      }
+    };
 
-  const handleEditComment = (commentId) => {
-    if (editedComment.trim()) {
-      dispatch(editComment(video.videoId, commentId, editedComment));
-      setEditingCommentId(null);
-      setEditedComment('');
-    }
-  };
+    fetchVideoData();
+  }, [videoId]);  // Re-fetch when videoId changes
 
-  const handleDeleteComment = (commentId) => {
-    dispatch(deleteComment(video.videoId, commentId));
-  };
+  // Handle loading and error states
+  if (loading) {
+    return <div className="py-20 text-center">Loading video...</div>;  // Shows loading message
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500">{error}</div>;  // Shows error message if any
+  }
 
   return (
-    <div className="p-4">
-      <div className="mb-4">
-        <video src={video.url} controls className="w-full h-auto"></video>
-      </div>
-      <h1 className="mb-2 font-bold text-2xl">{video.title}</h1>
-      <p className="mb-4 text-gray-600">{video.description}</p>
-      <div className="flex gap-4 mb-4">
-        <button className="bg-blue-500 px-4 py-2 rounded text-white">Like</button>
-        <button className="bg-red-500 px-4 py-2 rounded text-white">Dislike</button>
-      </div>
-      <div>
-        <h2 className="mb-2 font-bold text-xl">Comments</h2>
-        <div className="mb-4">
-          <input
-            type="text"
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Add a comment"
-            className="mb-2 px-4 py-2 border rounded w-full"
-          />
-          <button onClick={handleAddComment} className="bg-accent px-4 py-2 rounded text-white">
-            Add Comment
-          </button>
+    <div className="mx-auto p-8 container">
+      {video && (
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="p-6">
+            <h1 className="font-semibold text-3xl text-gray-900">{video.title}</h1>
+            <img
+              src={video.thumbnailUrl}
+              alt={video.title}
+              className="mt-4 rounded-md w-full h-96 object-cover"
+            />
+            <p className="mt-4 text-gray-700 text-lg">{video.description}</p>
+          </div>
         </div>
-        <ul>
-          {video.comments.map((comment) => (
-            <li key={comment.commentId} className="mb-2">
-              {editingCommentId === comment.commentId ? (
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={editedComment}
-                    onChange={(e) => setEditedComment(e.target.value)}
-                    className="px-4 py-2 border rounded w-full"
-                  />
-                  <button
-                    onClick={() => handleEditComment(comment.commentId)}
-                    className="bg-green-500 px-4 py-2 rounded text-white"
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={() => {
-                      setEditingCommentId(null);
-                      setEditedComment('');
-                    }}
-                    className="bg-gray-500 px-4 py-2 rounded text-white"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <div className="flex justify-between items-center">
-                  <p>{comment.text}</p>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => {
-                        setEditingCommentId(comment.commentId);
-                        setEditedComment(comment.text);
-                      }}
-                      className="bg-yellow-500 px-4 py-2 rounded text-white"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDeleteComment(comment.commentId)}
-                      className="bg-red-500 px-4 py-2 rounded text-white"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+      )}
     </div>
   );
 };

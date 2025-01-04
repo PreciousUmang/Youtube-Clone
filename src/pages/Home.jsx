@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import VideoCard from '../components/VideoCard';
 import CategoryFilter from '../components/CategoryFilter';
 import { useSelector } from 'react-redux';
-import axios from 'axios'; 
+import axios from '../api/axios'; 
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
@@ -16,8 +16,8 @@ const Home = () => {
   useEffect(() => {
     const fetchVideos = async () => {
       try {
-        const response = await axios.get('/api/videos'); 
-        setVideos(response.data);  // Set the videos data fetched from API
+        const response = await axios.get('/videos'); 
+        setVideos(response.data);
         setLoading(false);
       } catch (err) {
         setError('Error fetching videos');
