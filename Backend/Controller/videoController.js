@@ -1,37 +1,33 @@
 import Video from '../Model/Video.js';
-import { validationResult } from 'express-validator';
+import Channel from '../Model/Channel.js'
 
-// Create a new video
-export const createVideo = async (req, res) => {
+// Upload a new video
+export const uploadVideo = async (req, res) => {
   try {
-    const { videoId, title, videoUrl, thumbnailUrl, description, channelId, uploader, views, likes, dislikes, uploadDate, comments } = req.body;    
-    if (!videoUrl && !req.file) {
-        return res.status(400).json({ message: 'Video URL or file must be provided' });
+    const { title, description, videoUrl } = req.body;
+
+
+    const channel = await Channel.findOne({ owner: req.userId });
+    if (!channel) {
+      return res.status(404).json({ message: 'Channel not found' });
     }
-    
+
     const newVideo = new Video({
-      videoId,
       title,
-      thumbnailUrl,
-      videoUrl,
       description,
-      channelId,
-      uploader,
-      views,
-      likes,
-      dislikes,
-      uploadDate,
-      comments,
+      videoUrl,
+      thumbnailUrl: '',
+      uploader: req.userId,
+      channelId: channel._id,
     });
 
-    // Save the video to the database
     await newVideo.save();
     res.status(201).json(newVideo);
   } catch (error) {
-    console.error('Error adding video:', error);
-    res.status(500).json({ message: 'Failed to add video' });
+    console.error('Error uploading video:', error);
+    res.status(500).json({ message: 'Failed to upload video' });
   }
-}
+};
 
 // Get all videos
 export const getVideos = async (req, res) => {

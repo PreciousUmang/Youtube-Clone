@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
 import { useState } from "react";
@@ -7,7 +7,13 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import CreateChannel from "./pages/CreateChannel";
 import ChannelPage from "./pages/ChannelPage";
+import VideoUpload from "./components/VideoUpload";
+import NotFound from "./components/NotFound";
 
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  return token ? children : <Navigate to="/login" />;
+};
 
 function App() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
@@ -36,7 +42,16 @@ function App() {
             {/* Channel */}
             <Route path="/create-channel" element={<CreateChannel />} />
             <Route path="/channel/:channelId" element={<ChannelPage />} />
+            <Route path="/upload" element={
+              <PrivateRoute>
+                <VideoUpload />
+              </PrivateRoute>
+            }
+            />
+              <Route path="*" element={<NotFound />} />
+     
           </Routes>
+          
         </div>
       </Router>
     </>

@@ -47,7 +47,7 @@ const VideoUpload = () => {
         },
       });
       console.log('Video uploaded:', response.data);
-      navigate('/'); // Redirect to home or video page
+      navigate('/'); 
     } catch (err) {
       console.error('Error uploading video:', err);
       setError('Failed to upload video');

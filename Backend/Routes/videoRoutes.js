@@ -1,11 +1,11 @@
 import express from 'express';
-import { createVideo, getVideos, getVideoById, updateVideo, deleteVideo } from '../Controller/videoController.js';
+import { getVideos, getVideoById, updateVideo, deleteVideo, uploadVideo } from '../Controller/videoController.js';
 import { authenticate } from '../Middleware/authMiddleware.js';
 
 const router = express.Router();
 
 // Video routes
-router.post('/videos', createVideo); 
+router.post('/videos', authenticate,uploadVideo); 
 router.get('/videos', getVideos);
 router.get('/videos/:id', getVideoById);
 router.put('/videos/:id', authenticate, updateVideo);

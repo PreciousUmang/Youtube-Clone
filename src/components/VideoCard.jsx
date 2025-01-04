@@ -12,10 +12,10 @@ const VideoCard = ({ videos = [] }) => {
               <p className="text-gray-600 text-sm">{video.channelName}</p>
               <p className="text-gray-500 text-sm">{video.views} views</p>
               <div className="flex justify-between items-center mt-4">
-                <button className="bg-accent hover:bg-darkAccent px-4 py-2 rounded font-bold text-white">
+                <button className="bg-accent hover:bg-darkAccent px-2 py-1 rounded font-bold text-white">
                   Watch Now
                 </button>
-                <button className="bg-secondary hover:bg-darkAccent px-4 py-2 rounded font-bold text-white">
+                <button className="bg-secondary hover:bg-darkAccent px-2 py-1 rounded font-bold text-white">
                   Learn More
                 </button>
               </div>

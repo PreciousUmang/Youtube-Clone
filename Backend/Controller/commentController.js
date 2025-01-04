@@ -3,38 +3,55 @@ import Video from '../Model/Video.js';
 
 export const getComments = async (req, res) => {
   try {
-    const comments = await Comment.find({ videoId: req.params.videoId })
-      .populate('user', 'username') 
-      .sort({ createdAt: -1 }); 
+    const videoId = req.params.videoId;
+    if (!videoId) {
+      return res.status(400).json({ error: 'Video ID is required' });
+    }
+
+    const video = await Video.findById(videoId);
+    if (!video) {
+      return res.status(404).json({ error: 'Video not found' });
+    }
+
+    const comments = await Comment.find({ videoId: videoId })
+      .populate('user', 'username')
+      .sort({ createdAt: -1 });
 
     res.json(comments);
-  } catch (err) {
-    console.error('Error fetching comments:', err);
-    res.status(500).json({ message: 'Error fetching comments' });
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ error: 'Error fetching comments' });
   }
 };
 
 export const postComment = async (req, res) => {
   try {
-    const { text } = req.body;
-    const video = await Video.findById(req.params.videoId);
-
-    if (!video) {
-      return res.status(404).json({ message: 'Video not found' });
+    const videoId = req.params.videoId;
+    if (!videoId) {
+      return res.status(400).json({ error: 'Video ID is required' });
     }
 
+    const video = await Video.findById(videoId);
+    if (!video) {
+      return res.status(404).json({ error: 'Video not found' });
+    }
+
+    const { text } = req.body;
+    if (!text) {
+      return res.status(400).json({ error: 'Comment text is required' });
+    }
 
     const newComment = new Comment({
       text,
-      videoId: video._id,
+      videoId: videoId,
       user: req.userId,
     });
 
     const savedComment = await newComment.save();
     const populatedComment = await Comment.findById(savedComment._id).populate('user', 'username');
     res.status(201).json(populatedComment);
-  } catch (err) {
-    console.error('Error adding comment:', err);
-    res.status(500).json({ message: 'Error adding comment' });
+  } catch (error) {
+    console.error('Error submitting comment:', error);
+    res.status(500).json({ error: 'Error submitting comment' });
   }
 };

@@ -22,8 +22,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <Link to="/create-channel">
           <li className="hover:text-secondary cursor-pointer">Create a Channel</li>
         </Link>
-        <Link to="/subscriptions">
-          <li className="hover:text-secondary cursor-pointer">Subscriptions</li>
+        <Link to="/upload">
+          <li className="hover:text-secondary cursor-pointer">Upload a Video</li>
         </Link>
         <Link to="/library">
           <li className="hover:text-secondary cursor-pointer">Library</li>
