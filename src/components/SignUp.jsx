@@ -6,6 +6,7 @@ const SignUp = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,7 +17,11 @@ const SignUp = () => {
         password,
       });
       console.log('User registered:', response.data);
-      alert('User has been successfully registered')
+      setSuccess(true);
+      alert('User has been successfully registered');
+      setUsername('');
+      setEmail('');
+      setPassword('');
     } catch (error) {
       setError('Error during sign-up. Please try again.');
       console.error('Error during sign-up:', error);
@@ -56,6 +61,7 @@ const SignUp = () => {
             />
           </div>
           {error && <p className="text-red-500 text-sm">{error}</p>}
+          {success && <p className="text-green-500 text-sm">User registered successfully!</p>}
           <button
             type="submit"
             className="bg-accent hover:bg-darkAccent focus:ring-opacity-50 shadow-md py-3 rounded-lg focus:ring-2 focus:ring-accent w-full font-semibold text-white focus:outline-none"
@@ -76,4 +82,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignUp;``

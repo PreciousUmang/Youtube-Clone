@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import axios from 'axios';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const CreateChannel = () => {
@@ -17,7 +17,14 @@ const CreateChannel = () => {
       try {
         const response = await axios.post(
           'http://localhost:5000/api/channels/create',
-          { name: channelName, description },
+          {
+            channelName: channelName,
+            description: description,
+            owner: 'userName', // hardcoded owner ID for now
+            banner: 'https://example.com/banner-image.jpg', // hardcoded banner URL for now
+            subscribers: 0, // default subscribers to 0
+            createdAt: new Date().toISOString(), // set createdAt to current date and time
+          },
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -1,47 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchVideos } from '../redux/videoActions';
 import VideoCard from '../components/VideoCard';
 import CategoryFilter from '../components/CategoryFilter';
-import { useSelector } from 'react-redux';
-import axios from '../api/axios'; 
 
 const Home = () => {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
 
   // Redux state (for filtering)
   const filteredVideos = useSelector((state) => state.video.filteredVideos);
+  const loading = useSelector((state) => state.video.loading); // Get loading state from Redux
+  const error = useSelector((state) => state.video.error); // Get error state from Redux
 
   // Fetch videos and their comments from the backend API
   useEffect(() => {
-    const fetchVideos = async () => {
-      try {
-        const response = await axios.get('/videos'); 
-        setVideos(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError('Error fetching videos');
-        setLoading(false);
-      }
-    };
-    fetchVideos();
-  }, []);
+    dispatch(fetchVideos());
+  }, [dispatch]);
 
   // Render the loading state or error if any
-  if (loading) return <div>Loading videos...</div>;
-  if (error) return <div>{error}</div>;
+  if (loading) return <div className="p-20 text-center text-primary">Loading videos...</div>;
+  if (error) return <div className="p-20 font-bold text-center text-red-500">{error}</div>;
 
   return (
-    <div className="p-4">
+    <div className="bg-gradient-to-r from-primary to-secondary p-4 md:p-6 lg:p-8">
       <CategoryFilter />
-      <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {filteredVideos.length > 0
-          ? filteredVideos.map((video) => (
-              <VideoCard key={video.videoId} video={video} />
-            ))
-          : videos.map((video) => (
-              <VideoCard key={video._id} video={video} />
-            ))}
+      <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-4">
+        {filteredVideos.map((video) => (
+          <VideoCard key={video.videoId || video._id} videos={[video]} />
+        ))}
       </div>
     </div>
   );

@@ -43,7 +43,9 @@ export const getVideos = async (req, res) => {
 // Get a specific video by ID
 export const getVideoById = async (req, res) => {
   try {
-    const video = await Video.findById(req.params.id).populate('uploader', 'username avatar');
+const video = await Video.findById(req.params.id)
+  .populate('uploader', 'username avatar')
+.populate('channelId', 'channelName subscribers'); // Populate channelId to get channel name and subscribers
     if (!video) {
       return res.status(404).json({ message: 'Video not found' });
     }

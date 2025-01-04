@@ -18,7 +18,7 @@ const channelSchema = new mongoose.Schema(
     },
     banner: {
       type: String,
-      default: '', // URL to the channel banner
+      default: '',
     },
     videos: [
       {
@@ -31,6 +31,10 @@ const channelSchema = new mongoose.Schema(
       default: 0,
     },
     createdAt: {
+      type: Date,
+      default: Date.now,
+    },
+    updatedAt: {
       type: Date,
       default: Date.now,
     },

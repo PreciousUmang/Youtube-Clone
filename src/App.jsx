@@ -23,7 +23,7 @@ function App() {
         <Header onSidebarToggle={handleSidebarToggle} />
         <div
           className={`transition-all duration-300 ease-in-out ${isSidebarOpen ? "ml-64" : "ml-0"
-            } flex-1 bg-gray-100 p-4`}
+            } flex-1 bg-gray-100`}
         >
           <Routes>
             <Route path="/" element={<Home />} />

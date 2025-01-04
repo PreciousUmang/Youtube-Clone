@@ -10,7 +10,7 @@ export const fetchVideos = () => async (dispatch) => {
     dispatch(setLoading(true)); 
 
     try {
-        const response = await axios.get("http://localhost:2309/api/videos");
+        const response = await axios.get("http://localhost:5000/api/videos");
         dispatch({
             type: FETCH_VIDEOS,
             payload: response.data,

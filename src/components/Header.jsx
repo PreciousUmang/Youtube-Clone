@@ -14,18 +14,18 @@ const Header = ({ onSidebarToggle }) => {
 
   return (
     <>
-      <header className="flex justify-between items-center bg-primary p-4 text-darkAccent">
-        <button onClick={toggleSidebar} className="px-4 text-secondary hover:text-accent">
+<header className="flex justify-between items-center bg-primary shadow-lg p-4 text-darkAccent">
+<button onClick={toggleSidebar} className="px-4 text-secondary hover:text-darkAccent transition">
           ☰
         </button>
-        <h1 className="font-bold text-lg text-secondary">YouTube Clone</h1>
+<h1 className="font-bold text-accent text-lg">YouTube Clone</h1>
         <SearchBar />
         <div>
         {userName ? (
-          <span className="mx-4 font-semibold text-secondary">🟢{userName}</span>
+<span className="mx-4 font-semibold text-accent">🟢{userName}</span>
         ) : (
           <Link to={'/signup'}>
-            <button className="text-accent hover:text-secondary">Sign Up</button>
+<button className="text-accent hover:text-darkAccent transition">Sign Up</button>
           </Link>
         )}
       </div>
