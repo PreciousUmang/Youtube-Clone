@@ -20,6 +20,8 @@ const Login = () => {
       localStorage.setItem('token', response.data.token); // Store the token
       localStorage.setItem('userName', response.data.user.username);
       navigate('/');
+      window.location.reload();
+ 
     } catch (error) {
       setError('Invalid credentials. Please try again.');
       console.error('Error during login:', error);

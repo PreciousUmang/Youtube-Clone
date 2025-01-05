@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const VideoUpload = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [videoUrl, setVideoUrl] = useState('');
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [channelId, setChannelId] = useState('');
   const navigate = useNavigate();
+  const categories = useSelector((state) => state.video.categories);
 
   useEffect(() => {
     const fetchChannelId = async () => {
@@ -21,8 +25,8 @@ const VideoUpload = () => {
         });
         setChannelId(response.data._id);
       } catch (err) {
-        console.error('Error fetching channel ID:', err);
-        setError('Failed to fetch channel ID');
+        console.error('Error fetching channel ID:', err.response ? err.response.data : err.message);
+        setError('Failed to fetch channel ID: ' + (err.response ? err.response.data.message : err.message));
       }
     };
 
@@ -37,6 +41,8 @@ const VideoUpload = () => {
       title,
       description,
       videoUrl,
+      thumbnailUrl,
+      category,
       channelId,
     };
 
@@ -49,8 +55,8 @@ const VideoUpload = () => {
       console.log('Video uploaded:', response.data);
       navigate('/'); 
     } catch (err) {
-      console.error('Error uploading video:', err);
-      setError('Failed to upload video');
+      console.error('Error uploading video:', err.response ? err.response.data : err.message);
+      setError('Failed to upload video: ' + (err.response ? err.response.data.message : err.message));
     } finally {
       setLoading(false);
     }
@@ -100,6 +106,38 @@ const VideoUpload = () => {
             required
             className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-accent w-full focus:outline-none"
           />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-2 font-bold text-gray-700 text-sm" htmlFor="thumbnailUrl">
+            Thumbnail URL
+          </label>
+          <input
+            type="text"
+            id="thumbnailUrl"
+            placeholder="Thumbnail URL"
+            value={thumbnailUrl}
+            onChange={(e) => setThumbnailUrl(e.target.value)}
+            required
+            className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-accent w-full focus:outline-none"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block mb-2 font-bold text-gray-700 text-sm" htmlFor="category">
+            Category
+          </label>
+          <select
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+            className="px-3 py-2 border rounded-lg focus:ring-2 focus:ring-accent w-full focus:outline-none"
+          >
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
         </div>
         {error && <p className="mb-4 text-red-500 text-sm">{error}</p>}
         <button

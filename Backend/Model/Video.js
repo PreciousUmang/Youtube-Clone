@@ -27,6 +27,10 @@ const videoSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Channel',
     },
+    category: {
+      type: String,
+      default: 'All',
+    },
     createdAt: {
       type: Date,
       default: Date.now,

@@ -38,11 +38,10 @@ const fetchComments = async () => {
 
   return (
     <div className="video-player-container">
-      <ReactPlayer url={videoUrl} controls={true} className="rounded-lg" />
+      <ReactPlayer url={videoUrl} controls={true} className="rounded-lg w-full" />
       <h2 className="mt-4 font-bold text-xl">{title}</h2>
       <p className="text-gray-700">{description}</p>
       <div className="mt-4 comments-section">
-        <h3 className="font-semibold">Comments:</h3>
         {comments.map(comment => (
           <div key={comment._id} className="comment">
             <p className="font-bold">{comment.user ? (comment.user.username || 'Unknown User') : 'Unknown User'}</p>

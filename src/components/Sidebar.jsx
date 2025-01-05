@@ -1,6 +1,13 @@
 import { Link } from "react-router-dom";
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const userName = localStorage.getItem('userName');
+
+  const handleLogout = () => {
+    localStorage.removeItem('userName');
+    window.location.reload();
+  };
+
   return (
     <div
       className={`fixed top-0 left-0 h-full bg-darkAccent text-primary transition-transform duration-300 ease-in-out shadow-lg ${
@@ -25,9 +32,19 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <Link to="/upload">
           <li className="hover:text-secondary cursor-pointer">Upload a Video</li>
         </Link>
-        <Link to="/library">
-          <li className="hover:text-secondary cursor-pointer">Library</li>
-        </Link>
+        {userName && (
+          <>
+            <Link to="/library">
+              <li className="hover:text-secondary cursor-pointer">Library</li>
+            </Link>
+            <li
+              onClick={handleLogout}
+              className="hover:text-secondary cursor-pointer"
+            >
+              Logout
+            </li>
+          </>
+        )}
       </ul>
     </div>
   );

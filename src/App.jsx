@@ -22,23 +22,20 @@ function App() {
     setSidebarOpen(isOpen);
   };
 
-
   return (
     <>
       <Router>
         <Header onSidebarToggle={handleSidebarToggle} isSidebarOpen={isSidebarOpen} />
         <div
           className={`transition-all duration-300 ease-in-out ${isSidebarOpen ? "ml-64" : "ml-0"
-            } flex-1 bg-gray-100`}
+            } flex-1 bg-gradient-to-bl from-primary to-secondary`}
         >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/video/:videoId" element={<VideoDetails />} />
-
             {/* Login/Signup */}
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-
             {/* Channel */}
             <Route path="/create-channel" element={<CreateChannel />} />
             <Route path="/channel/:channelId" element={<ChannelPage />} />
@@ -48,10 +45,8 @@ function App() {
               </PrivateRoute>
             }
             />
-              <Route path="*" element={<NotFound />} />
-     
+            <Route path="*" element={<NotFound />} />
           </Routes>
-          
         </div>
       </Router>
     </>

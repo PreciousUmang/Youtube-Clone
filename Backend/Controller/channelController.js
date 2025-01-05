@@ -26,6 +26,20 @@ export const createChannel = async (req, res) => {
   }
 };
 
+// Get the authenticated user's channel
+export const getMyChannel = async (req, res) => {
+  try {
+    const channel = await Channel.findOne({ owner: req.userId });
+    if (!channel) {
+      return res.status(404).json({ message: 'Channel not found' });
+    }
+    res.status(200).json(channel);
+  } catch (error) {
+    console.error('Error fetching channel:', error);
+    res.status(500).json({ message: 'Failed to fetch channel' });
+  }
+};
+
 // Get all channels
 export const getChannels = async (req, res) => {
   try {

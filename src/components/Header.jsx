@@ -1,11 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SearchBar from './SearchBar';
 import Sidebar from './Sidebar';
 import { Link } from 'react-router-dom';
 
 const Header = ({ onSidebarToggle, isSidebarOpen: initialSidebarOpen }) => {
   const [isSidebarOpen, setSidebarOpen] = useState(initialSidebarOpen);
-  const userName = localStorage.getItem('userName');
+  const [userName, setUserName] = useState(localStorage.getItem('userName'));
+
+  useEffect(() => {
+    const storedUserName = localStorage.getItem('userName');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
+
   const toggleSidebar = () => {
     const newState = !isSidebarOpen;
     setSidebarOpen(newState);

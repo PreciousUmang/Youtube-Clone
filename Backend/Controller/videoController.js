@@ -1,13 +1,12 @@
 import Video from '../Model/Video.js';
-import Channel from '../Model/Channel.js'
+import Channel from '../Model/Channel.js';
 
 // Upload a new video
 export const uploadVideo = async (req, res) => {
   try {
-    const { title, description, videoUrl } = req.body;
+    const { title, description, videoUrl, thumbnailUrl, category, channelId } = req.body;
 
-
-    const channel = await Channel.findOne({ owner: req.userId });
+    const channel = await Channel.findById(channelId);
     if (!channel) {
       return res.status(404).json({ message: 'Channel not found' });
     }
@@ -16,7 +15,8 @@ export const uploadVideo = async (req, res) => {
       title,
       description,
       videoUrl,
-      thumbnailUrl: '',
+      thumbnailUrl,
+      category,
       uploader: req.userId,
       channelId: channel._id,
     });
@@ -57,7 +57,7 @@ const video = await Video.findById(req.params.id)
 // Update a video
 export const updateVideo = async (req, res) => {
   try {
-    const { title, description, videoUrl, thumbnailUrl, channelId } = req.body;
+    const { title, description, videoUrl, thumbnailUrl, category, channelId } = req.body;
 
     const video = await Video.findById(req.params.id);
     if (!video) {
@@ -68,6 +68,7 @@ export const updateVideo = async (req, res) => {
     video.description = description || video.description;
     video.videoUrl = videoUrl || video.videoUrl;
     video.thumbnailUrl = thumbnailUrl || video.thumbnailUrl;
+    video.category = category || video.category; // Ensure category is included
     video.channelId = channelId || video.channelId;
 
     await video.save();
