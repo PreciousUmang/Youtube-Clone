@@ -21,7 +21,7 @@ A full-stack YouTube clone built using the MERN stack (MongoDB, Express, React, 
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/youtube-clone.git
+   git clone https://github.com/PreciousUmang/Youtube-Clone.git
    cd youtube-clone
    ```
 
@@ -42,17 +42,17 @@ A full-stack YouTube clone built using the MERN stack (MongoDB, Express, React, 
 5. Start the backend server:
    ```bash
    cd Backend
-   npm start
+   npm run dev
    ```
 
 6. Start the frontend application:
    ```bash
    cd ../src
-   npm start
+   npm run dev
    ```
 
 ## Usage
-- Navigate to `http://localhost:3000` to access the application.
+- Navigate to `http://localhost:5000` to access the application (or whichever server has been created by Vite).
 - Use the sign-in button to log in or register a new account.
 
 ## API Documentation
@@ -61,5 +61,3 @@ Refer to the API documentation section below for details on available endpoints.
 ## Contributing
 Contributions are welcome! Please submit a pull request or open an issue for any suggestions.
 
-## License
-This project is licensed under the MIT License.
