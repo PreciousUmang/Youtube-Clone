@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const CreateChannel = () => {
   const [channelName, setChannelName] = useState('');
   const [description, setDescription] = useState('');
+  const [banner, setBanner] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -15,15 +16,16 @@ const CreateChannel = () => {
       navigate('/login');
     } else {
       try {
+        const userId = JSON.parse(atob(token.split('.')[1])).userId; // Extract user ID from token
         const response = await axios.post(
           'http://localhost:5000/api/channels/create',
           {
-            channelName: channelName,
-            description: description,
-            owner: JSON.parse(atob(token.split('.')[1])).id, // Extract user ID from token
-            banner: '', // Allow user to specify banner URL
-            subscribers: 0, // default subscribers to 0
-            createdAt: new Date().toISOString(), // set createdAt to current date and time
+            channelName,
+            description,
+            owner: userId,
+            banner, 
+            subscribers: 0, 
+            createdAt: new Date().toISOString(),
           },
           {
             headers: {
@@ -32,10 +34,10 @@ const CreateChannel = () => {
           }
         );
         console.log('Channel created:', response.data);
-        navigate('/channel');
+        navigate('/upload');
       } catch (error) {
         setError('Error creating channel. Please try again.');
-        console.error('Error creating channel:', error);
+        console.error('Error creating channel:', error.response ? error.response.data : error.message); // Add detailed logging
       }
     }
   };
@@ -57,6 +59,13 @@ const CreateChannel = () => {
             placeholder="Channel Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            className="border-gray-300 p-3 border rounded-lg w-full"
+          />
+          <input
+            type="text"
+            placeholder="Banner URL"
+            value={banner}
+            onChange={(e) => setBanner(e.target.value)}
             className="border-gray-300 p-3 border rounded-lg w-full"
           />
           <button

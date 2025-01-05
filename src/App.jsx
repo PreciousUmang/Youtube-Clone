@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       <Router>
-        <Header onSidebarToggle={handleSidebarToggle} />
+        <Header onSidebarToggle={handleSidebarToggle} isSidebarOpen={isSidebarOpen} />
         <div
           className={`transition-all duration-300 ease-in-out ${isSidebarOpen ? "ml-64" : "ml-0"
             } flex-1 bg-gray-100`}

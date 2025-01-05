@@ -1,9 +1,9 @@
 import Channel from '../Model/Channel.js'; 
 import User from '../Model/User.js'; 
 
-
 export const createChannel = async (req, res) => {
   const { channelName, description, owner, banner } = req.body;
+  console.log('Request body:', req.body); 
   try {
     const newChannel = new Channel({
       channelName,
@@ -21,6 +21,7 @@ export const createChannel = async (req, res) => {
 
     res.status(201).json({ message: 'Channel created successfully!', channel: newChannel });
   } catch (error) {
+    console.error('Error creating channel:', error); 
     res.status(500).json({ message: 'Error creating channel', error: error.message });
   }
 };
