@@ -54,6 +54,21 @@ const video = await Video.findById(req.params.id)
   }
 };
 
+// Fetch comments for a specific video
+export const getComments = async (req, res) => {
+  try {
+    const videoId = req.params.id;
+    const video = await Video.findById(videoId).populate('comments.user', 'username');
+    if (!video) {
+      return res.status(404).json({ message: 'Video not found' });
+    }
+    res.status(200).json(video.comments);
+  } catch (error) {
+    console.error('Error fetching comments:', error);
+    res.status(500).json({ message: 'Failed to fetch comments' });
+  }
+};
+
 // Update a video
 export const updateVideo = async (req, res) => {
   try {

@@ -101,7 +101,7 @@
         "thumbnailUrl": "https://example.com/thumbnails/react30min.png",
         "views": 15200
       },
-      ...
+
     ]
     ```
 
@@ -113,7 +113,9 @@
       "videoId": "video01",
       "title": "Learn React in 30 Minutes",
       "description": "A quick tutorial to get started with React.",
-      "comments": [...]
+      "comments": [
+        // ...existing code...
+      ]
     }
     ```
 
@@ -170,5 +172,6 @@
         "text": "Great video!",
         "timestamp": "2024-09-21T08:30:00Z"
       },
-      ...
+      // ...existing code...
     ]
+    ```

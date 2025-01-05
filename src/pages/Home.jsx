@@ -21,7 +21,7 @@ const Home = () => {
   if (error) return <div className="p-20 font-bold text-center text-red-500">{error}</div>;
 
   return (
-    <div className="bg-gradient-to-r from-primary to-secondary p-4 md:p-6 lg:p-8">
+    <div className="bg-gradient-to-r from-primary to-secondary p-4 md:p-6 lg:p-8 min-h-screen">
       <CategoryFilter />
       <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-4">
         {filteredVideos.map((video) => (

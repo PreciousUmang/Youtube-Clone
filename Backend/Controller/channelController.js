@@ -3,7 +3,6 @@ import User from '../Model/User.js';
 
 export const createChannel = async (req, res) => {
   const { channelName, description, owner, banner } = req.body;
-  console.log('Request body:', req.body); 
   try {
     const newChannel = new Channel({
       channelName,

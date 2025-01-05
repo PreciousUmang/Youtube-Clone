@@ -22,7 +22,6 @@ const SignUp = () => {
         window.location.href = '/login';
       }, 2000);
       setSuccess(true);
-      alert('User has been successfully registered');
       setUsername('');
       setEmail('');
       setPassword('');
