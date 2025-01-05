@@ -31,14 +31,14 @@
   - **Request Body**: 
     ```json
     {
-      "email": "john@example.com",
+      "email": "Umang@example.com",
       "password": "password123"
     }
     ```
   - **Response**: 
     ```json
     {
-      "token": "your_jwt_token"
+      "token": "You will get JWT Token here"
     }
     ```
 
@@ -114,7 +114,6 @@
       "title": "Learn React in 30 Minutes",
       "description": "A quick tutorial to get started with React.",
       "comments": [
-        // ...existing code...
       ]
     }
     ```
@@ -172,6 +171,5 @@
         "text": "Great video!",
         "timestamp": "2024-09-21T08:30:00Z"
       },
-      // ...existing code...
     ]
     ```
